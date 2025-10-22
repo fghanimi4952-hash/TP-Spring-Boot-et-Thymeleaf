@@ -1,0 +1,4 @@
+ma/thymeleaf/demothymeleaf/entity/User.class
+ma/thymeleaf/demothymeleaf/DemothymeleafApplication.class
+ma/thymeleaf/demothymeleaf/controller/UserController.class
+ma/thymeleaf/demothymeleaf/repository/UserRepository.class

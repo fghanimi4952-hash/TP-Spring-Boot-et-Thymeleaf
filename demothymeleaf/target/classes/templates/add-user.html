@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ajouter un Utilisateur</title>
+    <style>
+        :root{
+          --bg:#0f172a;            /* slate-900 */
+          --panel:#0b1226;         /* deep panel */
+          --card:#111b34;          /* card base */
+          --muted:#9db2d0;
+          --text:#e6edf7;
+          --primary:#6aa4ff;
+          --primary-600:#4c8dff;
+          --success:#3ccf91;
+          --danger:#ff6b6b;
+          --warning:#f7b500;
+          --border:rgba(255,255,255,.12);
+          --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+          --radius:16px;
+          --radius-sm:12px;
+          --spacing:18px;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0;
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+          color:var(--text);
+          background:
+            radial-gradient(1200px 600px at 10% -10%, #1e2a52 0%, transparent 60%),
+            radial-gradient(1000px 500px at 100% 0%, #14234a 0%, transparent 70%),
+            var(--bg);
+          line-height:1.5;
+        }
+        .container{
+          max-width: 860px;
+          margin: 40px auto;
+          padding: 0 18px;
+        }
+        .page-title{
+          text-align:center;
+          margin-bottom: 26px;
+          letter-spacing:.2px;
+          font-weight:700;
+        }
+        .card{
+          background: linear-gradient(180deg, var(--card), #0c162c 80%);
+          border:1px solid var(--border);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          padding: clamp(18px, 3vw, 28px);
+        }
+        .form-grid{
+          display:grid;
+          grid-template-columns: 1fr;
+          gap: var(--spacing);
+        }
+        @media (min-width: 720px){
+          .form-grid{ grid-template-columns: 1fr 1fr; }
+          .full-row{ grid-column: 1 / -1; }
+        }
+        label{
+          display:block;
+          font-size:.95rem;
+          color:var(--muted);
+          margin-bottom:8px;
+        }
+        input[type="text"],
+        input[type="email"]{
+          width:100%;
+          padding: 12px 14px;
+          border-radius: 12px;
+          border:1px solid var(--border);
+          background: #0a1428;
+          color: var(--text);
+          outline: none;
+          transition: border .2s, box-shadow .2s, transform .05s;
+        }
+        input:focus{
+          border-color: color-mix(in oklab, var(--primary) 70%, white 0%);
+          box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 30%, transparent 70%);
+        }
+        .error{
+          color: var(--danger);
+          font-size: .85rem;
+          margin-top: 6px;
+          display:block;
+        }
+        .actions{
+          display:flex;
+          gap:10px;
+          flex-wrap:wrap;
+          margin-top: 4px;
+        }
+        .btn{
+          appearance:none;
+          border:1px solid var(--border);
+          background:#0b1430;
+          color:var(--text);
+          padding: 10px 14px;
+          border-radius: 12px;
+          cursor:pointer;
+          text-decoration:none;
+          font-weight:600;
+          transition: transform .06s ease, background .18s ease, border-color .18s ease;
+          display:inline-flex; align-items:center; gap:8px;
+        }
+        .btn:hover{ transform: translateY(-1px); border-color: color-mix(in oklab, white 20%, var(--border) 80%); }
+        .btn:active{ transform: translateY(0); }
+        .btn-primary{ background: linear-gradient(180deg, var(--primary), var(--primary-600)); border-color: transparent; color:#061128; }
+        .btn-ghost{ background: transparent; }
+        .hint{ color: var(--muted); font-size:.9rem; margin-top: 6px;}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">Ajouter un Utilisateur</h1>
+
+    <div class="card">
+        <form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+            <div class="form-grid">
+                <div class="full-row">
+                    <label for="name">Nom *</label>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Votre nom">
+                    <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+
+                <div class="full-row">
+                    <label for="email">Email *</label>
+                    <input type="email" th:field="*{email}" id="email" placeholder="votre@email.com">
+                    <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top:18px">
+                <button type="submit" class="btn btn-primary">Ajouter l'utilisateur</button>
+                <a href="/" class="btn btn-ghost">Retour à la liste</a>
+            </div>
+            <p class="hint">Les champs marqués * sont obligatoires.</p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Modifier l'Utilisateur</title>
+    <style>
+        :root{
+          --bg:#0f172a; --panel:#0b1226; --card:#111b34; --muted:#9db2d0; --text:#e6edf7;
+          --primary:#6aa4ff; --primary-600:#4c8dff; --danger:#ff6b6b; --border:rgba(255,255,255,.12);
+          --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+          --radius:16px;
+        }
+        *{box-sizing:border-box}
+        body{
+          margin:0; min-height:100%;
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+          color:var(--text);
+          background:
+            radial-gradient(1200px 600px at 10% -10%, #1e2a52 0%, transparent 60%),
+            radial-gradient(1000px 500px at 100% 0%, #14234a 0%, transparent 70%),
+            var(--bg);
+        }
+        .container{ max-width:860px; margin:40px auto; padding:0 18px; }
+        .page-title{ text-align:center; margin-bottom: 22px; font-weight:700; }
+        .card{
+          background: linear-gradient(180deg, var(--card), #0c162c 80%);
+          border:1px solid var(--border);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          padding: clamp(18px, 3vw, 28px);
+        }
+        .form-grid{ display:grid; grid-template-columns:1fr; gap:18px; }
+        @media (min-width:720px){ .form-grid{ grid-template-columns:1fr 1fr; } .full-row{ grid-column:1 / -1; } }
+        label{ display:block; color:var(--muted); margin-bottom:8px; }
+        input[type="text"], input[type="email"]{
+          width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border);
+          background:#0a1428; color:var(--text); outline:none; transition:border .2s, box-shadow .2s;
+        }
+        input:focus{
+          border-color: color-mix(in oklab, var(--primary) 70%, white 0%);
+          box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 30%, transparent 70%);
+        }
+        .error{ color:var(--danger); font-size:.85rem; margin-top:6px; display:block; }
+        .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 6px; }
+        .btn{
+          appearance:none; border:1px solid var(--border); border-radius:12px;
+          background:#0b1430; color:var(--text); padding:10px 14px; font-weight:700;
+          text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:.18s;
+          cursor:pointer;
+        }
+        .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.2); }
+        .btn-primary{ background: linear-gradient(180deg, #ffd166, #f7b500); border-color:transparent; color:#3a2500; }
+        .btn-ghost{ background: transparent; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="page-title">Modifier l'Utilisateur</h1>
+
+    <div class="card">
+        <form action="#" th:action="@{/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <div class="form-grid">
+                <div class="full-row">
+                    <label for="name">Nom *</label>
+                    <input type="text" th:field="*{name}" id="name" placeholder="Votre nom">
+                    <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+
+                <div class="full-row">
+                    <label for="email">Email *</label>
+                    <input type="email" th:field="*{email}" id="email" placeholder="votre@email.com">
+                    <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                </div>
+            </div>
+
+            <div class="actions" style="margin-top:18px">
+                <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                <a href="/" class="btn btn-ghost">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
